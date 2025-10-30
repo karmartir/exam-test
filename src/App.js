@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./App.css";
 
 function App() {
   const [name, setName] = useState("");
@@ -36,20 +35,16 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      <h1 className="main-title">Contact List</h1>
-
-      <div className="content-wrapper">
-        <div className="form-section">
+    <>
+      <h1>Contact List</h1>  
           <h2>Add Contact</h2>
-          <form onSubmit={handleNewUser} className="contact-form">
+          <form onSubmit={handleNewUser}>
             <input
               placeholder="Name"
               required
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="input-field"
             />
             <input
               placeholder="Email"
@@ -57,7 +52,6 @@ function App() {
               type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="input-field"
             />
             <input
               placeholder="Phone Number"
@@ -65,49 +59,36 @@ function App() {
               type="text"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="input-field"
             />
-            <button type="submit" className="add-button">
-              Add Contact
-            </button>
+            <button type="submit">Add Contact</button>
           </form>
-        </div>
+   
 
-        <div className="contacts-section">
+        <div>
           <h2>Contacts</h2>
-          <div className="search-bar">
             <input
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder="Search by name..."
-              className="search-input"
             />
-            <button onClick={handleSearchOrReset} className="search-button">
+            <button onClick={handleSearchOrReset}>
               {filteredUsers.length > 0 ? "Reset" : "Search"}
             </button>
-          </div>
+         
 
-          <div className="contacts-list">
+          <div>
             {(filteredUsers.length > 0 ? filteredUsers : users).map((user) => (
-              <div key={user.id} className="contact-card">
-                <div>
-                  <h3>{user.name}</h3>
-                  <p>{user.email}</p>
-                  <p>{user.phone}</p>
-                </div>
-                <button
-                  onClick={() => handleDelete(user.id)}
-                  className="delete-button"
-                >
-                  Delete
-                </button>
+              <div key={user.id}>
+                <h3>{user.name}</h3>
+                <p>{user.email}</p>
+                <p>{user.phone}</p>
+                <button onClick={() => handleDelete(user.id)}>Delete</button>
               </div>
             ))}
           </div>
         </div>
-      </div>
-    </div>
+     
+    </>
   );
 }
-
 export default App;
