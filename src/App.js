@@ -107,7 +107,7 @@ const App = () => {
                 className="delete-btn-x"
                 onClick={() => handleDelete(user.id)}
               >
-                ×
+                ❌
               </button>
               <h2>{user.name}</h2>
               <p>{user.email}</p>
