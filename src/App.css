@@ -1,27 +1,33 @@
-.App {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  text-align: center;
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background-color: #f5f6fa;
+  color: #333;
 }
 
-.title {
-  margin-bottom: 30px;
-}
-
-.container {
+.app-container {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 60px;
+  flex-direction: column;
+  padding: 20px;
+  gap: 30px;
 }
 
-.form-section,
-.list-section {
-  width: 400px;
-  background-color: #f7f8fa;
+/* Desktop: form and contacts side by side */
+@media (min-width: 900px) {
+  .app-container {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 50px;
+  }
+}
+
+.form-container {
+  background: #fff;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 320px;
 }
 
 .contact-form {
@@ -31,71 +37,87 @@
 }
 
 .contact-form input {
-  padding: 10px;
-  border-radius: 6px;
+  padding: 8px;
   border: 1px solid #ccc;
+  border-radius: 6px;
 }
 
-.contact-form button {
-  background-color: #007bff;
-  color: white;
+.btn {
+  padding: 8px 12px;
   border: none;
-  padding: 10px;
   border-radius: 6px;
   cursor: pointer;
+  font-weight: 600;
 }
 
-.contact-form button:hover {
+.add-btn {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.add-btn:hover {
   background-color: #0056b3;
 }
 
-.search-bar {
+.contacts-section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 15px;
+}
+
+.search-container {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
 }
 
-.search-bar input {
-  flex: 1;
+.search-input {
   padding: 8px;
-  border-radius: 6px;
   border: 1px solid #ccc;
-}
-
-.search-bar button {
-  padding: 8px 12px;
-  border: none;
-  background-color: #28a745;
-  color: white;
   border-radius: 6px;
-  cursor: pointer;
+  min-width: 35%;
+  max-width: 45%;
 }
 
-.search-bar button:hover {
-  background-color: #1f7a33;
+.search-btn {
+  background-color: #28a745;
+  color: #fff;
 }
 
-.contact-list {
+.search-btn:hover {
+  background-color: #218838;
+}
+
+.contacts-grid {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .contact-card {
-  background: white;
-  border-radius: 8px;
-  padding: 10px;
-  text-align: left;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 220px;
+  text-align: center;
 }
 
-.contact-card h3 {
-  margin: 0;
+.contact-card h2 {
+  margin: 8px 0;
+  color: #007bff;
+}
+
+.contact-card p {
+  margin: 3px 0;
+  font-size: 0.9rem;
+  color: #555;
 }
 
 .delete-btn {
   background-color: #dc3545;
-  color: white;
+  color: #fff;
   border: none;
   padding: 6px 10px;
   border-radius: 6px;
@@ -104,5 +126,30 @@
 }
 
 .delete-btn:hover {
-  background-color: #a71d2a;
+  background-color: #b52a38;
+}
+.contact-card {
+  position: relative; /* needed for absolute positioning of X */
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 220px;
+  text-align: center;
+}
+
+.delete-btn-x {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: #dc3545;
+  font-size: 1.2rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.delete-btn-x:hover {
+  color: #b52a38;
 }

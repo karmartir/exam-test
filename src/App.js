@@ -1,94 +1,123 @@
+import "./App.css";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import initialContacts from "./initialContacts";
 
-function App() {
+const App = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [users, setUsers] = useState([]);
+  const [contactList, setContactList] = useState(initialContacts);
   const [searchInput, setSearchInput] = useState("");
-  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [filteredContactList, setFilteredContactList] = useState([]);
 
-  const handleNewUser = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const newUser = { id: crypto.randomUUID(), name, email, phone };
-    setUsers([...users, newUser]);
+    if (name.trim() && email.trim() && phone.trim()) {
+      const newUser = { id: crypto.randomUUID(), name, email, phone };
+      setContactList([...contactList, newUser]);
+      toast.success("Contact added successfully");
+    }
     setName("");
     setEmail("");
     setPhone("");
   };
 
   const handleDelete = (id) => {
-    setUsers(users.filter((user) => user.id !== id));
+    setContactList(contactList.filter((each) => each.id !== id));
+    toast.info("Contact deleted successfully");
   };
 
-  const handleSearchOrReset = () => {
-    if (filteredUsers.length > 0) {
-      setFilteredUsers([]);
+  const handleSearch = () => {
+    if (filteredContactList.length > 0) {
+      setFilteredContactList([]);
       setSearchInput("");
     } else {
-      const newFilteredUsers = users.filter((user) =>
+      const results = contactList.filter((user) =>
         user.name.toLowerCase().includes(searchInput.toLowerCase())
       );
-      setFilteredUsers(newFilteredUsers);
+      if (results.length === 0) {
+        toast.error("No results found");
+      } else {
+        setFilteredContactList(results);
+      }
       setSearchInput("");
     }
   };
 
+  const displayList =
+    filteredContactList.length > 0 ? filteredContactList : contactList;
+
   return (
-    <>
-      <h1>Contact List</h1>  
-          <h2>Add Contact</h2>
-          <form onSubmit={handleNewUser}>
-            <input
-              placeholder="Name"
-              required
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <input
-              placeholder="Email"
-              required
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-              placeholder="Phone Number"
-              required
-              type="text"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-            <button type="submit">Add Contact</button>
-          </form>
-   
+    <div className="app-container">
+      <ToastContainer position="top-right" autoClose={2000} />
 
-        <div>
-          <h2>Contacts</h2>
-            <input
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              placeholder="Search by name..."
-            />
-            <button onClick={handleSearchOrReset}>
-              {filteredUsers.length > 0 ? "Reset" : "Search"}
-            </button>
-         
+      <div className="form-container">
+        <h2>Add Contact</h2>
+        <form className="contact-form" onSubmit={handleSubmit}>
+          <label>Name*</label>
+          <input
+            type="text"
+            placeholder="New name..."
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <label>Email*</label>
+          <input
+            type="email"
+            placeholder="email..."
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <label>Phone</label>
+          <input
+            type="text"
+            placeholder="phone..."
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+          <button className="btn add-btn" type="submit">
+            Add Contact
+          </button>
+        </form>
+      </div>
 
-          <div>
-            {(filteredUsers.length > 0 ? filteredUsers : users).map((user) => (
-              <div key={user.id}>
-                <h3>{user.name}</h3>
-                <p>{user.email}</p>
-                <p>{user.phone}</p>
-                <button onClick={() => handleDelete(user.id)}>Delete</button>
-              </div>
-            ))}
-          </div>
+      <div className="contacts-section">
+        <h2>Total Contacts: {contactList.length}</h2>
+
+        <div className="search-container">
+          <input
+            placeholder="Search by name..."
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            className="search-input"
+          />
+          <button onClick={handleSearch} className="btn search-btn">
+            {filteredContactList.length > 0 ? "Show All" : "Search"}
+          </button>
         </div>
-     
-    </>
+
+        <div className="contacts-grid">
+          {displayList.map((user) => (
+            <div key={user.id} className="contact-card">
+              <button
+                className="delete-btn-x"
+                onClick={() => handleDelete(user.id)}
+              >
+                ×
+              </button>
+              <h2>{user.name}</h2>
+              <p>{user.email}</p>
+              <p>{user.phone}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
-}
+};
+
 export default App;
