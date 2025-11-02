@@ -31,6 +31,7 @@ const App = () => {
 
   const handleSearch = () => {
     if (filteredContactList.length > 0) {
+      // button has double click functionality - to clear the list(show all contacts) and search input
       setFilteredContactList([]);
       setSearchInput("");
     } else {
