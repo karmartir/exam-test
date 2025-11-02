@@ -18,6 +18,8 @@ const App = () => {
       const newUser = { id: crypto.randomUUID(), name, email, phone };
       setContactList([...contactList, newUser]);
       toast.success("Contact added successfully");
+    } else {
+      toast.error("All fields are required");
     }
     setName("");
     setEmail("");
